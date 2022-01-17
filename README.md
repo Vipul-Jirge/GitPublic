@@ -13,13 +13,13 @@ This is a type of controllable generative art
 
 Control keys:
 
--UP Arrow: HOLE Increases
--DOWN Arrow: HOLE Decreases
--Q: Inner Circle Diameter Increases
--A: Inner Circle Diameter Decreases
--W: Outer Circle Diameter Increases
--S: Outer Circle Diameter Decreases
--O: Plot the circles - ON
--F: Plot the circles - OFF
--X: Stop plotting spiral at that instant
--Z: Start over with drawing the spiral
+- UP Arrow: HOLE Increases
+- DOWN Arrow: HOLE Decreases
+- Q: Inner Circle Diameter Increases
+- A: Inner Circle Diameter Decreases
+- W: Outer Circle Diameter Increases
+- S: Outer Circle Diameter Decreases
+- O: Plot the circles - ON
+- F: Plot the circles - OFF
+- X: Stop plotting spiral at that instant
+- Z: Start over with drawing the spiral
