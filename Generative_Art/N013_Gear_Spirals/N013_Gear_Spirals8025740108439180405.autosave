@@ -1,0 +1,81 @@
+from requirements import *
+from globalModules import save_output
+# for vs-code type check
+try:
+    from globalModules.Processing3 import *
+except:
+    pass
+
+
+def settings():
+    # frameRate(10)
+    size(900, 900)
+    smooth()
+
+def setup():
+    global D1, D2, THETA, HOLE
+    D1 = 400
+    D2 = 100    
+    THETA = 0
+    HOLE = 30
+    # px = RADIUS*sin(THETA) + width/2
+    # py = RADIUS*cos(THETA) + height/2
+    strokeWeight(2)
+    background(240)
+    noFill()
+    frameRate(100)
+    line(width/2 - 300,height/2, width/2 + 300,height/2)
+
+    cx = (D2/2) *THETA + width/2 - 200
+    cy = height/2 - D2/2
+
+    pg = createGraphics(D2, D2)
+
+    pg.beginDraw()
+    pg.background(0,0)
+    pg.stroke(255)
+    pg.circle(cx, cy, D2)
+    pg.endDraw()
+    image(pg, 9, 30)
+    image(pg, 51, 30)
+
+# def draw():
+#     global THETA
+#     # background(240)
+#     # circle(width/2, height/2, D1)
+#     # circle(width/2 + (D1/2 - D2/2)*cos(THETA), height/2 + (D1/2 - D2/2)*sin(THETA), D2)
+#     # # point()
+#     # THETA += float(PI/180)
+#     # background(240)
+    
+
+#     cx = (D2/2) *THETA + width/2 - 200
+#     cy = height/2 - D2/2
+#     circle(cx, cy, D2)
+#     line(cx,cy, cx - D2/2 *cos(PI/2 - THETA), cy+D2/2 * sin(PI/2 - THETA))
+#     THETA += PI/180
+
+# def draw():
+#     global THETA,RADIUS,px,py
+#     nx = RADIUS*sin(THETA) + width/2
+#     ny = RADIUS*cos(THETA) + height/2
+#     line(px,py,nx,ny)
+#     THETA += float(PI/(180))
+#     print(THETA)
+#     px = nx
+#     py = ny
+#     if THETA == float(2*PI):
+#         noLoop()
+#     # drawCircle(RADIUS,THETA,px = width/2, py = height/2)
+
+#     # circle(height/2, width/2, 100)
+#     # circle(height/2, width/2, 100)
+
+# def drawCircle(RADIUS,THETA,px,py):
+#     # point(RADIUS*sin(THETA) + width/2 , RADIUS*cos(THETA) + height/2)
+#     nx = RADIUS*sin(THETA) + width/2
+#     ny = RADIUS*cos(THETA) + height/2
+#     line(px,py,nx,ny)
+#     THETA += float(PI/(180*(RADIUS)))
+#     px = nx
+#     py = ny

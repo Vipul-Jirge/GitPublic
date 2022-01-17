@@ -1,0 +1,166 @@
+from requirements import *
+from globalModules import save_output
+# for vs-code type check
+try:
+    from globalModules.Processing3 import *
+except:
+    pass
+
+def circle_gen(circle_diameters,alpha_):
+    global alpha, alphaD, alphaDD
+    global Flip2, Flip3 #TODO: to implement
+    global HOLE
+
+    alpha = alpha_
+    alphaD = (alpha * D1/2.0) / D2/2.0
+    alphaDD = (alpha * D1/2.0) / D3/2.0
+
+    HOLE = 130 # make this D4
+
+    d1_prime = (D1/2.0 + Flip2*D2/2.0)
+    d2_prime = (D2/2.0 + Flip3*D3/2.0)
+    x = width/2.0 + d1_prime* cos(alpha) + d2_prime* cos(alpha+alphaD) + HOLE*cos(alpha+alphaD+alphaDD)
+    y = height/2.0+ d1_prime* sin(alpha) + d2_prime* sin(alpha+alphaD) + HOLE*sin(alpha+alphaD+alphaDD)
+    
+    # use for loop
+    # alp = alpha
+    # x = width/2.0 + d1_prime* cos(alpha)
+    # y = height/2.0 + d1_prime* sin(alpha)
+
+    # for d in diameters:
+    #     alp+= (alpha * D1/2.0) / d/2.0
+
+    # a = HOLE*sin(alpha+alphaD+alphaDD)
+    
+    return (x, y)
+
+def settings():
+    global IF_PLOT_CIRCLES, Flip2, Flip3
+    size(900, 900)
+    # smooth()
+    IF_PLOT_CIRCLES = False
+    Flip2 = 1
+    Flip3 = 1
+
+def setup():
+    frameRate(24)
+    #diameter of circle
+    global D1, D2,D3
+    D1 = 300
+    D2 = 180
+    D3 = 50
+    diameters = [D1, D2,D3]
+    
+
+    global global_alpha
+    global_alpha = PI/180
+
+    global TRACK_POINTS
+    TRACK_POINTS = circle_gen(diameters,global_alpha)
+
+    strokeWeight(1.2)
+    background(240)
+    noFill()
+
+    global PG_CURVE
+
+    PG_CURVE = createGraphics(width,height)
+    PG_CURVE.beginDraw()
+    PG_CURVE.stroke(1)
+    PG_CURVE.noFill()
+    PG_CURVE.background(240)
+    PG_CURVE.strokeWeight(0.8)
+    PG_CURVE.endDraw()
+
+    print("setup done!!")
+
+def draw():
+    global alpha, alphaD, alphaDD, PG_CURVE, HOLE, D1,D2,D3, TRACK_POINTS, IF_PLOT_CIRCLES
+    
+    # /// to put in circle function
+    # Equation for  spiral(?)
+    lineNX = width/2.0 + (D1/2.0 + Flip2*D2/2)* cos(alpha) + (D2/2.0 + Flip3*D3/2.0)* cos(alpha+alphaD) + HOLE*cos(alpha+alphaD+alphaDD)
+    lineNY = height/2.0 +(D1/2.0 + Flip2*D2/2)* sin(alpha) + (D2/2.0 + Flip3*D3/2.0)* sin(alpha+alphaD) + HOLE*sin(alpha+alphaD+alphaDD)
+    # ///
+
+    if IF_PLOT_CIRCLES == True:
+
+        # /// make this for loop
+        # Center big circle - plot it
+    
+        stroke(255,0,0)
+        circle(width/2.0,height/2.0, D1)
+        
+        # Center of 2nd circle + plot it
+        cx = width/2 + (D1/2 + D2/2) * cos(alpha)
+        cy = height/2+ (D1/2 + D2/2) * sin(alpha)
+
+        stroke(0,255,0)
+        circle(cx, cy, D2)
+        # Rotating Line inside the circle + plot it
+        line(cx,cy, lineNX,lineNY)
+
+        # Center of 3rd circle + plot it
+        cx = width/2.0 + (D1/2.0 + D2/2.0)* cos(alpha) + (D2/2.0 + D3/2.0)* cos(alpha+alphaD)
+        cy = height/2.0+ (D1/2.0 + D2/2.0)* sin(alpha) + (D2/2.0 + D3/2.0)* sin(alpha+alphaD)
+
+        stroke(0,0,255)
+        circle(cx, cy, D3)
+        # Rotating Line inside the circle + plot it
+        line(cx,cy, lineNX,lineNY)
+
+    # Epicycloyd (?)
+    stroke(255,0,0)
+    fill(255,0,0)
+    circle(lineNX,lineNY,5) # Red point tracking the spriral 
+    PG_CURVE.beginDraw()
+    PG_CURVE.curve(TRACK_POINTS[0], TRACK_POINTS[1], TRACK_POINTS[0], TRACK_POINTS[1], lineNX, lineNY, lineNX, lineNY)
+    # PG_CURVE.line(linePX,linePY,lineNX,lineNY)
+    PG_CURVE.endDraw()
+    TRACK_POINTS = (lineNX, lineNY)
+
+    # /// to put in circle function
+    alpha += 5*PI/180 # move ahead by 1 radian
+    alphaD = (alpha * D1/2.0) / D2/2.0 #TODO: wtf
+    alphaDD = (alpha * D1/2.0) / D3/2.0
+    # ///
+
+    background(240)
+    image(PG_CURVE,0,0)
+    
+
+
+def keyPressed():
+    global HOLE, D1, D2, D3, IF_PLOT_CIRCLES, Flip2, Flip3
+
+    PG_CURVE.clear()
+    PG_CURVE.beginDraw()
+    PG_CURVE.endDraw()
+    # run circle gen to get new track points
+
+    if key == CODED:
+        if keyCode == UP:
+            HOLE += 5
+        elif keyCode == DOWN:
+            HOLE -= 5
+    elif key == 'q':
+        D1 += 5
+    elif key == 'a':
+        D1 -= 5
+    elif key == 'w':
+        D2 += 5
+    elif key == 's':
+        D2 -= 5
+    elif key == 'e':
+        D3 += 5
+    elif key == 'd':
+        D3 -= 5
+    elif key == 'o':
+        IF_PLOT_CIRCLES = True
+    elif key == 'f':
+        IF_PLOT_CIRCLES = False
+    elif key == 'x':
+        noLoop()
+    elif key == 'z':
+        loop()
+    # print("typed %s %d" % (key, keyCode))

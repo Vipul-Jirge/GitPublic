@@ -1,0 +1,86 @@
+from requirements import *
+from globalModules import save_output
+# for vs-code type check
+try:
+    from globalModules.Processing3 import *
+except:
+    pass
+
+
+def settings():
+    # frameRate(10)
+    size(900, 900)
+    smooth()
+
+def setup():
+    
+    global D1, D2, THETA, HOLE, linePX, linePY, STORE_LINES
+    D1 = 400
+    D2 = 500    
+    THETA = 0
+    HOLE = 30
+    linePX = width/2 - 200
+    linePY = height/2
+    # px = RADIUS*sin(THETA) + width/2
+    # py = RADIUS*cos(THETA) + height/2
+    strokeWeight(1.2)
+    background(240)
+    noFill()
+    frameRate(100)
+    STORE_LINES = [[linePX,linePY]]
+
+def draw():
+    radius = 300
+    circle(width/2, height/2, radius)
+    # global THETA, linePX, linePY, STORE_LINES
+    # background(240)
+    # circle(width/2, height/2, D1)
+    # circle(width/2 + (D1/2 - D2/2)*cos(THETA), height/2 + (D1/2 - D2/2)*sin(THETA), D2)
+    # # point()
+    # THETA += float(PI/180)
+    # background(240)
+    # len = 600
+    # line(width/2 - len/2,height/2, width/2 + len/2,height/2)
+
+    # cx = (D2/2) *THETA + width/2 - 200
+    # cy = height/2 - D2/2
+    # circle(cx, cy, D2)
+    # line(cx,cy, cx - D2/2 *cos(PI/2 - THETA), cy+D2/2 * sin(PI/2 - THETA))
+    # lineNX = int(cx - D2/2 * cos(PI/2 - THETA))
+    # lineNY = int(cy + D2/2 * sin(PI/2 - THETA))
+    # # STORE_LINES.append([lineNX,lineNY])
+    # # print(STORE_LINES)
+    # for i in range(len(STORE_LINES)-1):
+    #     # print(i)
+    #     line(STORE_LINES[i][0],STORE_LINES[i][1],STORE_LINES[i+1][0],STORE_LINES[i+1][1])
+    # linePX = lineNX
+    # linePY = lineNY
+    # STORE_LINES.append([linePX,linePY])
+    # THETA += PI/180
+    # if cx > 2*PI*D2/2 + width/2 - 200:
+    #     noLoop()
+
+# def draw():
+#     global THETA,RADIUS,px,py
+#     nx = RADIUS*sin(THETA) + width/2
+#     ny = RADIUS*cos(THETA) + height/2
+#     line(px,py,nx,ny)
+#     THETA += float(PI/(180))
+#     print(THETA)
+#     px = nx
+#     py = ny
+#     if THETA == float(2*PI):
+#         noLoop()
+#     # drawCircle(RADIUS,THETA,px = width/2, py = height/2)
+
+#     # circle(height/2, width/2, 100)
+#     # circle(height/2, width/2, 100)
+
+# def drawCircle(RADIUS,THETA,px,py):
+#     # point(RADIUS*sin(THETA) + width/2 , RADIUS*cos(THETA) + height/2)
+#     nx = RADIUS*sin(THETA) + width/2
+#     ny = RADIUS*cos(THETA) + height/2
+#     line(px,py,nx,ny)
+#     THETA += float(PI/(180*(RADIUS)))
+#     px = nx
+#     py = ny
