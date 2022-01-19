@@ -1,4 +1,4 @@
-# Generative_Art
+## Generative_Art
  This repo is created to git various Generative Arts
 
 # How to use:
@@ -29,3 +29,10 @@ This is a type of controllable generative art
 
 Control keys:
 Move mouse up & down to change density + direction
+
+## Project Euler Problems
+Project Euler provides Basic to advanced level problems for competitive programming.
+
+These are only solved for fun & practice purposes.
+
+Ref Link: https://projecteuler.net/archives
